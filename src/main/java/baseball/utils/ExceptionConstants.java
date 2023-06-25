@@ -15,7 +15,8 @@ public class ExceptionConstants {
     }
 
     public enum GameProcessCommandException {
-        INVALID_COMMAND("재시작[1] / 종료[2] 중 하나를 입력해주세요.");
+        INVALID_COMMAND("재시작[1] / 종료[2] 중 하나를 입력해주세요."),
+        ;
 
         public final String message;
 
@@ -25,8 +26,9 @@ public class ExceptionConstants {
     }
 
     public enum InputException {
-        INPUT_LENGTH_MUST_BE_ACCEPTABLE_FOR_BASEBALLS("띄어쓰기 없이 숫자 3개를 입력해주세요."),
-        INPUT_MUST_BE_NUMERIC("숫자를 입력해주세요.");
+        INPUT_MUST_BE_NUMERIC("숫자를 입력해주세요."),
+        INPUT_MUST_NOT_CONTAINS_SPACE("공백없이 숫자를 입력해주세요."),
+        ;
 
         public final String message;
 
