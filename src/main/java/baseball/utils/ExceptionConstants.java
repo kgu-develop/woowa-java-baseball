@@ -23,4 +23,14 @@ public class ExceptionConstants {
             this.message = message;
         }
     }
+
+    public enum InputException {
+        INPUT_MUST_BE_NUMERIC("숫자를 입력해주세요.");
+
+        public final String message;
+
+        InputException(final String message) {
+            this.message = message;
+        }
+    }
 }
