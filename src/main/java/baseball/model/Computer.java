@@ -2,41 +2,44 @@ package baseball.model;
 
 import camp.nextstep.edu.missionutils.Randoms;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Computer {
-    public String randomNumber;
+    public List<Integer> randomNumber;
 
     public Computer() {
-//        saveRandomNumberWithGameStart();
+        saveRandomNumberWithGameStart();
     }
 
-    public String getRandomNumber() {
+    public List<Integer> getRandomNumber() {
         return randomNumber;
     }
 
     public void saveRandomNumberWithGameStart() {
-        randomNumber = "";
-        String digit;
+        randomNumber = new ArrayList<>();
+        Integer digit;
 
         while (checkLengthSmallThanThree()) {
-            digit = getRandomDigitToString();
+            digit = getRandomDigit();
             if (!hasDuplicateDigitInRandomNumber(digit)) {
-                randomNumber += digit;
+                randomNumber.add(digit);
             }
         }
     }
 
     public boolean checkLengthSmallThanThree() {
-        if (randomNumber.length() < 3) {
+        if (randomNumber.size() < 3) {
             return true;
         }
         return false;
     }
 
-    public String getRandomDigitToString() {
-        return String.valueOf(Randoms.pickNumberInRange(1, 9));
+    public Integer getRandomDigit() {
+        return Randoms.pickNumberInRange(1, 9);
     }
 
-    public boolean hasDuplicateDigitInRandomNumber(String digit) {
+    public boolean hasDuplicateDigitInRandomNumber(Integer digit) {
         if (randomNumber.contains(digit)) {
             return true;
         }

@@ -4,6 +4,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,10 +19,10 @@ class ComputerTest {
         Computer computer = new Computer();
 
         // when
-        computer.randomNumber = "123";
+        computer.randomNumber = new ArrayList<>(Arrays.asList(1, 2, 3));
 
         // then
-        assertThat(computer.hasDuplicateDigitInRandomNumber("1")).isTrue();
+        assertThat(computer.hasDuplicateDigitInRandomNumber(1)).isTrue();
     }
 
     @Test
@@ -28,11 +32,10 @@ class ComputerTest {
         Computer computer = new Computer();
 
         // when
-        String randomDigit = computer.getRandomDigitToString();
-        int intRandomDigit = Integer.parseInt(randomDigit);
+        Integer randomDigit = computer.getRandomDigit();
 
         // then
-        assertThat(intRandomDigit >= 1 && intRandomDigit <= 9).isTrue();
+        assertThat(randomDigit >= 1 && randomDigit <= 9).isTrue();
     }
 
     @Test
@@ -42,7 +45,7 @@ class ComputerTest {
         Computer computer = new Computer();
 
         // when
-        computer.randomNumber = "123";
+        computer.randomNumber = new ArrayList<>(Arrays.asList(1, 2));
 
         // then
         assertThat(computer.checkLengthSmallThanThree()).isTrue();
@@ -56,10 +59,10 @@ class ComputerTest {
 
         // when
         computer.saveRandomNumberWithGameStart();
-        int intRandomNumber = Integer.parseInt(computer.randomNumber);
+        List<Integer> randomNumber = computer.randomNumber;
 
         // then
-        assertThat(intRandomNumber >= 111 && intRandomNumber <= 999);
-        System.out.println(intRandomNumber);
+        assertThat(randomNumber.stream().allMatch(digit -> digit >= 111 && digit <= 999));
+        System.out.println(randomNumber);
     }
 }
