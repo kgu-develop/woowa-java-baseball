@@ -6,7 +6,7 @@ import static baseball.utils.BaseballConstants.BASEBALL_SIZE;
 
 public class OutputView {
     private static final String ENTER = "\n";
-    private static final String SPACE = " ";
+    private static final String SEPARATOR = " ";
 
     private static final String NOTHING = "낫싱";
     private static final String STRIKE = "스트라이크";
@@ -30,7 +30,7 @@ public class OutputView {
         if (hasBallCount(result)) {
             resultFormat.append(result.getBallCount())
                     .append(BALL)
-                    .append(SPACE);
+                    .append(SEPARATOR);
         }
 
         if (hasStrikeCount(result)) {
