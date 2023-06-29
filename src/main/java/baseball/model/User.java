@@ -1,13 +1,29 @@
 package baseball.model;
 
+
+import java.util.List;
+
 public class User {
     private enum RestartStatus { RESTART, TERMINATE }
 
-    private String number;
+    private List<Integer> number;
+    private RestartStatus restartStatus;
 
-    private void validateNumber(final String number) {
-        if (number.length() > 3 || number.length() < 3) {
+    private void validateNumber(final List<Integer> number) {
+        if (number.size() > 3 || number.size() < 3) {
             throw new IllegalArgumentException("입력 숫자는 3자리입니다.");
         }
+
+        if (!number.stream().allMatch(digit -> digit >= 1 && digit <= 9)) {
+            throw new IllegalArgumentException("입력 숫자는 3자리입니다.");
+        }
+    }
+
+    public void restart() {
+        this.restartStatus = RestartStatus.RESTART;
+    }
+
+    public void terminate() {
+        this.restartStatus = RestartStatus.TERMINATE;
     }
 }
