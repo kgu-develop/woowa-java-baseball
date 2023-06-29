@@ -3,40 +3,40 @@ package baseball.model;
 import camp.nextstep.edu.missionutils.Randoms;
 
 public class Computer {
-    private String randomNumber;
+    public String randomNumber;
 
     public Computer() {
-        saveRandomNumberWithGameStart();
+//        saveRandomNumberWithGameStart();
     }
 
     public String getRandomNumber() {
         return randomNumber;
     }
 
-    private void saveRandomNumberWithGameStart() {
+    public void saveRandomNumberWithGameStart() {
         randomNumber = "";
         String digit;
 
         while (checkLengthSmallThanThree()) {
             digit = getRandomDigitToString();
-            if (!hasDigitInRandomNumber(digit)) {
+            if (!hasDuplicateDigitInRandomNumber(digit)) {
                 randomNumber += digit;
             }
         }
     }
 
-    private boolean checkLengthSmallThanThree() {
+    public boolean checkLengthSmallThanThree() {
         if (randomNumber.length() < 3) {
             return true;
         }
         return false;
     }
 
-    private String getRandomDigitToString() {
+    public String getRandomDigitToString() {
         return String.valueOf(Randoms.pickNumberInRange(1, 9));
     }
 
-    private boolean hasDigitInRandomNumber(String digit) {
+    public boolean hasDuplicateDigitInRandomNumber(String digit) {
         if (randomNumber.contains(digit)) {
             return true;
         }
