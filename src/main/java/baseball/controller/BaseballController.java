@@ -12,27 +12,35 @@ public class BaseballController {
             user.restart();
         }
     }
-    private boolean isTerminate() {
+    public boolean isTerminate() {
         String restartStatus = Console.readLine();
 
-        validateRestart(restartStatus);
-        if(restartStatus == "2"){
+        validateRangeRestartStatus(restartStatus);
+        validateNotStringRestartStatus(restartStatus);
+        validateNotStringRestartStatus(restartStatus);
+
+
+        if(restartStatus.equals("2") ){
             return true;
         } else {
             return false;
         }
     }
 
-    private void validateRestart(final String restartStatus) {
+    public void validateRangeRestartStatus(final String restartStatus) {
         if (Integer.parseInt(restartStatus) < 1 || Integer.parseInt(restartStatus) > 2) {
             throw new IllegalArgumentException("재시작은 1, 완전 종료는 2 입니다.");
         }
+    }
 
+    public void validateNotStringRestartStatus(final String restartStatus) {
         if ( !(restartStatus != null && restartStatus.matches("[-+]?\\d*\\.?\\d+")) ) {
             throw new IllegalArgumentException("재시작은 1, 완전 종료는 2인 정수입니다.");
         }
+    }
 
-        if (restartStatus.chars().allMatch(Character::isDigit)) {
+    public void validateNotDoubleRestartStatus(final String restartStatus) {
+        if (!restartStatus.chars().allMatch(Character::isDigit)) {
             throw new IllegalArgumentException("재시작은 1, 완전 종료는 2인 정수로 소수를 입력할 수 없습니다.");
         }
     }
