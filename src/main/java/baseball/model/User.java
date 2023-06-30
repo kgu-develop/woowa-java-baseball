@@ -7,14 +7,14 @@ public class User {
     public enum RestartStatus { RESTART, TERMINATE }
 
     private List<Integer> number;
-    public RestartStatus restartStatus;
+    private RestartStatus restartStatus;
 
     public void setNumber(List<Integer> number) {
         validateNumber(number);
         this.number = number;
     }
 
-    public void validateNumber(final List<Integer> number) {
+    private void validateNumber(final List<Integer> number) {
         if (number.size() > 3 || number.size() < 3) {
             throw new IllegalArgumentException("입력 숫자는 3자리입니다.");
         }
