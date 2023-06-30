@@ -9,6 +9,11 @@ public class User {
     private List<Integer> number;
     private RestartStatus restartStatus;
 
+    public void setNumber(List<Integer> number) {
+        validateNumber(number);
+        this.number = number;
+    }
+
     private void validateNumber(final List<Integer> number) {
         if (number.size() > 3 || number.size() < 3) {
             throw new IllegalArgumentException("입력 숫자는 3자리입니다.");
