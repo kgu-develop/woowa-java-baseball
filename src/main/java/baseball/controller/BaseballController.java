@@ -17,9 +17,21 @@ public class BaseballController {
     public void playGame(Computer computer) {
         User user = new User();
         inputUserNumber(user);
+
+        int strikeCount = getStrikeCount(user, computer);
+        int ballCount = getBallCount(user, computer);
+
+        if (strikeCount == 3) {
+            System.out.println(strikeCount + "스트라이크");
+        } else if (strikeCount == 0 && ballCount == 0) {
+            System.out.println("낫싱");
+        } else {
+            System.out.println(ballCount + "볼 " + strikeCount + "스트라이크");
+        }
     }
 
     private void inputUserNumber(User user) {
+        System.out.print("숫자를 입력해주세요 : ");
         String inputNumber = Console.readLine();
         List<Integer> number = new ArrayList<>();
 
