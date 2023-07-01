@@ -9,7 +9,7 @@ public class Computer {
     public List<Integer> randomNumber;
 
     public Computer() {
-        saveRandomNumberWithGameStart();
+//        saveRandomNumberWithGameStart();
     }
 
     public List<Integer> getRandomNumber() {
@@ -44,5 +44,9 @@ public class Computer {
             return true;
         }
         return false;
+    }
+
+    public void setRandomNumber(List<Integer> randomNumber) {
+        this.randomNumber = randomNumber;
     }
 }
