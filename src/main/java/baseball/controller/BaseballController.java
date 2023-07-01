@@ -14,6 +14,26 @@ public class BaseballController {
         return new Computer();
     }
 
+    public void playGame(Computer computer) {
+        User user = new User();
+        inputUserNumber(user);
+    }
+
+    private void inputUserNumber(User user) {
+        String inputNumber = Console.readLine();
+        List<Integer> number = new ArrayList<>();
+
+        for (int i = 0; i < inputNumber.length(); i++) {
+            char digitNumber = inputNumber.charAt(i);
+            String digitStringNumber = String.valueOf(digitNumber);
+
+            validateNotStringRestartStatus(digitStringNumber);
+            number.add(Integer.valueOf(digitStringNumber));
+        }
+
+        user.setNumber(number);
+    }
+
     public int getStrikeCount(User user, Computer computer) {
         List<Integer> computerRandomNumber = computer.getRandomNumber();
         List<Integer> userNumber = user.getNumber();
