@@ -18,6 +18,11 @@ public class BaseballController {
         User user = new User();
         inputUserNumber(user);
 
+        /*
+        System.out.println(user.getNumber());
+        System.out.println(computer.getRandomNumber());
+        */
+
         int strikeCount = getStrikeCount(user, computer);
         int ballCount = getBallCount(user, computer);
 

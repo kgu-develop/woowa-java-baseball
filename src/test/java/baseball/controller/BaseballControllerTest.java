@@ -116,7 +116,23 @@ class BaseballControllerTest {
         // given
         BaseballController controller = new BaseballController();
 
-        String userInput = "123"; // Replace with the desired input
+        String userInput = "123";
+        InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
+        System.setIn(inputStream);
+
+        // when
+        controller.playGame(new Computer());
+
+        // then
+    }
+
+    @Test
+    @DisplayName("사용자 입력에 따른 결과 반환 테스트")
+    void resultTest() {
+        // given
+        BaseballController controller = new BaseballController();
+
+        String userInput = "123";
         InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
         System.setIn(inputStream);
 
