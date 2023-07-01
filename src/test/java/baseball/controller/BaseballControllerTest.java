@@ -141,4 +141,23 @@ class BaseballControllerTest {
 
         // then
     }
+
+    @Test
+    @DisplayName("게임 종료 테스트")
+    void gameOverTest() {
+        // given
+        BaseballController controller = new BaseballController();
+        User user = new User();
+
+        String userInput = "1";
+        InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
+        System.setIn(inputStream);
+
+        // when
+        boolean isGameOver = controller.gameOver(user);
+
+        // then
+        assertThat(isGameOver).isFalse();
+        assertThat(user.getRestartStatus()).isEqualTo(User.RestartStatus.RESTART);
+    }
 }
