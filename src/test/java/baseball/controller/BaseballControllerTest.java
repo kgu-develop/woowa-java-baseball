@@ -1,5 +1,6 @@
 package baseball.controller;
 
+import baseball.model.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -60,18 +61,14 @@ class BaseballControllerTest {
     
     @Test
     @DisplayName("사용자 입력에 따른 종료 테스트")
-    void BaseballControllerTest() {
+    void terminateTest() {
         // given
-        // 콘솔 입력 시뮬레이션
-        String input = "1";
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
-        System.setIn(inputStream);
-
+        String restartStatus = "1";
         BaseballController controller = new BaseballController();
         
         // when
 
         // then
-        assertThat(controller.isTerminate()).isFalse();
+        assertThat(controller.isTerminate(restartStatus)).isFalse();
     }
 }

@@ -5,20 +5,18 @@ import camp.nextstep.edu.missionutils.Console;
 
 public class BaseballController {
     public void terminateGame(User user) {
-        if (isTerminate()) {
+        if (isTerminate(terminateSignUserInput())) {
             user.terminate();
-            System.out.println("완전 정료");
+            System.out.println("완전 종료");
         } else {
             user.restart();
         }
     }
-    public boolean isTerminate() {
-        String restartStatus = Console.readLine();
 
+    public boolean isTerminate(String restartStatus) {
         validateRangeRestartStatus(restartStatus);
         validateNotStringRestartStatus(restartStatus);
-        validateNotStringRestartStatus(restartStatus);
-
+        validateNotDoubleRestartStatus(restartStatus);
 
         if(restartStatus.equals("2") ){
             return true;
@@ -43,6 +41,10 @@ public class BaseballController {
         if (!restartStatus.chars().allMatch(Character::isDigit)) {
             throw new IllegalArgumentException("재시작은 1, 완전 종료는 2인 정수로 소수를 입력할 수 없습니다.");
         }
+    }
+
+    private String terminateSignUserInput() {
+        return Console.readLine();
     }
 
     public void restartGame() {
