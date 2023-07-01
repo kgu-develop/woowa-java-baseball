@@ -35,4 +35,8 @@ public class User {
     public List<Integer> getNumber() {
         return number;
     }
+
+    public RestartStatus getRestartStatus() {
+        return restartStatus;
+    }
 }

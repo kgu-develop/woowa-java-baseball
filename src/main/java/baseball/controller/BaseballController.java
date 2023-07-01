@@ -16,22 +16,40 @@ public class BaseballController {
 
     public void playGame(Computer computer) {
         User user = new User();
-        inputUserNumber(user);
 
-        /*
-        System.out.println(user.getNumber());
-        System.out.println(computer.getRandomNumber());
-        */
 
-        int strikeCount = getStrikeCount(user, computer);
-        int ballCount = getBallCount(user, computer);
+        while (true) {
+            inputUserNumber(user);
 
-        if (strikeCount == 3) {
-            System.out.println(strikeCount + "스트라이크");
-        } else if (strikeCount == 0 && ballCount == 0) {
-            System.out.println("낫싱");
+            /*
+            System.out.println(user.getNumber());
+            System.out.println(computer.getRandomNumber());
+            */
+
+            int strikeCount = getStrikeCount(user, computer);
+            int ballCount = getBallCount(user, computer);
+
+            if (strikeCount == 3) {
+                System.out.println(strikeCount + "스트라이크");
+                System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임종료");
+                System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요");
+                break;
+            } else if (strikeCount == 0 && ballCount == 0) {
+                System.out.println("낫싱");
+            } else {
+                System.out.println(ballCount + "볼 " + strikeCount + "스트라이크");
+            }
+        }
+    }
+
+    public boolean gameOver(User user) {
+        terminateGame(user);
+
+        if (user.getRestartStatus() == User.RestartStatus.TERMINATE) {
+            System.out.println("완전 종료");
+            return true;
         } else {
-            System.out.println(ballCount + "볼 " + strikeCount + "스트라이크");
+            return false;
         }
     }
 
@@ -72,10 +90,6 @@ public class BaseballController {
         return false;
     }
 
-    /*
-    1 ~ 9까지보면서 컴퓨터와 사용자가 둘 다 가지고 있는데 contain
-    인덱스 자리는 다른 거의 갯수 세기
-    */
     public int getBallCount(User user, Computer computer) {
         List<Integer> computerRandomNumber = computer.getRandomNumber();
         List<Integer> userNumber = user.getNumber();
@@ -111,7 +125,6 @@ public class BaseballController {
     public void terminateGame(User user) {
         if (isTerminate(terminateSignUserInput())) {
             user.terminate();
-            System.out.println("완전 종료");
         } else {
             user.restart();
         }
@@ -151,9 +164,5 @@ public class BaseballController {
 
     private String terminateSignUserInput() {
         return Console.readLine();
-    }
-
-    public void restartGame() {
-        // 게임을 끝내지 않을 것이라는 신호를 줌
     }
 }
