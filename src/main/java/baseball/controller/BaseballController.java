@@ -9,15 +9,9 @@ import java.util.List;
 
 public class BaseballController {
 
-    public void gameStart(User user) {
-        String inputNumber = Console.readLine();
-        List<Integer> number = new ArrayList<>();
-
-        for (int i = 0; i < inputNumber.length(); i++) {
-            number.add(Integer.valueOf(inputNumber.charAt(i)));
-        }
-
-        user.setNumber(number);
+    public Computer gameStart() {
+        System.out.println("숫자 야구 게임을 시작합니다.");
+        return new Computer();
     }
 
     public int getStrikeCount(User user, Computer computer) {

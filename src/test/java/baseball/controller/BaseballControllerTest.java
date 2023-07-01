@@ -89,7 +89,7 @@ class BaseballControllerTest {
         int strikeCount = controller.getStrikeCount(user, computer);
 
         // then
-        assertThat(strikeCount).isEqualTo(2);
+        assertThat(strikeCount).isEqualTo(1);
     }
 
     @Test

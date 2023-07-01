@@ -50,6 +50,6 @@ class UserTest {
         user.terminate();
 
         // then
-        assertThat(user.restartStatus).isEqualTo(User.RestartStatus.RESTART);
+        assertThat(user.restartStatus).isEqualTo(User.RestartStatus.TERMINATE);
     }
 }
