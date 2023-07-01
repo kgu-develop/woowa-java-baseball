@@ -1,9 +1,82 @@
 package baseball.controller;
 
+import baseball.model.Computer;
 import baseball.model.User;
 import camp.nextstep.edu.missionutils.Console;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BaseballController {
+
+    public void gameStart(User user) {
+        String inputNumber = Console.readLine();
+        List<Integer> number = new ArrayList<>();
+
+        for (int i = 0; i < inputNumber.length(); i++) {
+            number.add(Integer.valueOf(inputNumber.charAt(i)));
+        }
+
+        user.setNumber(number);
+    }
+
+    public int getStrikeCount(User user, Computer computer) {
+        List<Integer> computerRandomNumber = computer.getRandomNumber();
+        List<Integer> userNumber = user.getNumber();
+        int strikeCnt = 0;
+        for (int i = 0; i < computerRandomNumber.size(); i++) {
+            if (isStrike(computerRandomNumber.get(i), userNumber.get(i))) {
+                strikeCnt += 1;
+            }
+        }
+
+        return strikeCnt;
+    }
+
+    public boolean isStrike(Integer computerRandomNumberDigit, Integer userNumberDigit) {
+        if (computerRandomNumberDigit == userNumberDigit) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /*
+    1 ~ 9까지보면서 컴퓨터와 사용자가 둘 다 가지고 있는데 contain
+    인덱스 자리는 다른 거의 갯수 세기
+    */
+    public int getBallCount(User user, Computer computer) {
+        List<Integer> computerRandomNumber = computer.getRandomNumber();
+        List<Integer> userNumber = user.getNumber();
+        int ballCnt = 0;
+
+        for (int i = 1; i <= 9; i++) {
+            if (isBall(computerRandomNumber, userNumber, i)) {
+                ballCnt += 1;
+            }
+        }
+
+        return ballCnt;
+    }
+
+    public boolean isBall(List<Integer> computerRandomNumber, List<Integer> userNumber, int idx) {
+        if (hasBothNumberContain(computerRandomNumber, userNumber, idx)) {
+            if (computerRandomNumber.indexOf(idx) != userNumber.indexOf(idx)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean hasBothNumberContain(List<Integer> computerRandomNumber, List<Integer> userNumber, int idx) {
+        if (computerRandomNumber.contains(idx) && userNumber.contains(idx)) {
+            return true;
+        }
+
+        return false;
+    }
+
     public void terminateGame(User user) {
         if (isTerminate(terminateSignUserInput())) {
             user.terminate();
@@ -24,6 +97,8 @@ public class BaseballController {
             return false;
         }
     }
+
+
 
     public void validateRangeRestartStatus(final String restartStatus) {
         if (Integer.parseInt(restartStatus) < 1 || Integer.parseInt(restartStatus) > 2) {

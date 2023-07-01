@@ -31,4 +31,8 @@ public class User {
     public void terminate() {
         this.restartStatus = RestartStatus.TERMINATE;
     }
+
+    public List<Integer> getNumber() {
+        return number;
+    }
 }
