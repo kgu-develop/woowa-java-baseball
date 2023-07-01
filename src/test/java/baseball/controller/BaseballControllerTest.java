@@ -147,17 +147,15 @@ class BaseballControllerTest {
     void gameOverTest() {
         // given
         BaseballController controller = new BaseballController();
-        User user = new User();
 
-        String userInput = "1";
+        String userInput = "2";
         InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
         System.setIn(inputStream);
 
         // when
-        boolean isGameOver = controller.gameOver(user);
+        boolean isGameOver = controller.gameOver();
 
         // then
-        assertThat(isGameOver).isFalse();
-        assertThat(user.getRestartStatus()).isEqualTo(User.RestartStatus.RESTART);
+        assertThat(isGameOver).isTrue();
     }
 }

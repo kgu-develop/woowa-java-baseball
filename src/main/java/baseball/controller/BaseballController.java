@@ -8,6 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaseballController {
+    public void run() {
+        do {
+            Computer computer = gameStart();
+            playGame(computer);
+        } while (gameOver());
+    }
 
     public Computer gameStart() {
         System.out.println("숫자 야구 게임을 시작합니다.");
@@ -16,7 +22,6 @@ public class BaseballController {
 
     public void playGame(Computer computer) {
         User user = new User();
-
 
         while (true) {
             inputUserNumber(user);
@@ -42,13 +47,11 @@ public class BaseballController {
         }
     }
 
-    public boolean gameOver(User user) {
-        terminateGame(user);
-
-        if (user.getRestartStatus() == User.RestartStatus.TERMINATE) {
-            System.out.println("완전 종료");
+    public boolean gameOver() {
+        if (isTerminate(terminateSignUserInput())) {
             return true;
         } else {
+            System.out.println("완전 종료");
             return false;
         }
     }
@@ -122,23 +125,15 @@ public class BaseballController {
         return false;
     }
 
-    public void terminateGame(User user) {
-        if (isTerminate(terminateSignUserInput())) {
-            user.terminate();
-        } else {
-            user.restart();
-        }
-    }
-
     public boolean isTerminate(String restartStatus) {
         validateRangeRestartStatus(restartStatus);
         validateNotStringRestartStatus(restartStatus);
         validateNotDoubleRestartStatus(restartStatus);
 
         if(restartStatus.equals("2") ){
-            return true;
-        } else {
             return false;
+        } else {
+            return true;
         }
     }
 
