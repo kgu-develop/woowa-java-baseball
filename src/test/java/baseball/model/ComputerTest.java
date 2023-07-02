@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ComputerTest {
     @Test
@@ -13,6 +14,14 @@ class ComputerTest {
         final Computer computer = new Computer();
 
         // then
-        assertThat(computer.getBaseballs()).hasSize(3);
+        assertAll(
+                () -> assertThat(computer.getBaseballs()).hasSize(3), // size
+                () -> assertThat(
+                        computer.getBaseballs()
+                                .stream()
+                                .distinct()
+                                .count()
+                ).isEqualTo(3) // has duplicate
+        );
     }
 }
