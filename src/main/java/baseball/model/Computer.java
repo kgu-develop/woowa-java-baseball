@@ -17,7 +17,7 @@ public class Computer {
     private Baseballs generateRandomBaseballs() {
         List<Integer> baseballs = new ArrayList<>();
 
-        while (baseballs.size() != BASEBALL_SIZE) {
+        while (baseballs.size() < BASEBALL_SIZE) {
             int randomNumber = Randoms.pickNumberInRange(MIN_BASEBALL, MAX_BASEBALL);
             if (!baseballs.contains(randomNumber)) {
                 baseballs.add(randomNumber);
