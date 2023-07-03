@@ -15,22 +15,25 @@ public class BaseballController {
     public static final String RESTART_OR_END_NOT_NUMBER_BECAUSE_STRING_EXCEPTION = "재시작은 1, 완전 종료는 2인 정수입니다.";
     public static final String RESTART_OR_END_NOT_NUMBER_BECAUSE_DOUBLE_EXCEPTION = "재시작은 1, 완전 종료는 2인 정수로 소수를 입력할 수 없습니다.";
 
+    private User user;
+    private Computer computer;
+
     public void run() {
-        printGameStartMessage();
         do {
-            Computer computer = gameStart();
-            playGame(computer);
+            computer = gameStart();
+            playGame();
         } while (gameOver());
     }
 
     public Computer gameStart() {
+        printGameStartMessage();
         return new Computer();
     }
 
-    public void playGame(Computer computer) {
-        User user = new User();
+    public void playGame() {
+        user = new User();
         while (true) {
-            inputUserNumber(user);
+            inputUserNumber();
             int strikeCount = getStrikeCount(user, computer);
             int ballCount = getBallCount(user, computer);
 
@@ -49,7 +52,7 @@ public class BaseballController {
         }
     }
 
-    private void inputUserNumber(User user) {
+    private void inputUserNumber() {
         user.setNumber(inputNumber());
     }
 

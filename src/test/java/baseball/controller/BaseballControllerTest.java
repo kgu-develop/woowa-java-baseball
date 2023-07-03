@@ -2,6 +2,7 @@ package baseball.controller;
 
 import baseball.model.Computer;
 import baseball.model.User;
+import baseball.view.InputView;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,8 +11,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.InstanceOfAssertFactories.comparable;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -114,32 +114,17 @@ class BaseballControllerTest {
     @DisplayName("사용자 3자리 수 입력 테스트")
     void inputUserNumberTest() {
         // given
-        BaseballController controller = new BaseballController();
+        InputView inputView = new InputView();
 
         String userInput = "123";
         InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
         System.setIn(inputStream);
 
         // when
-        controller.playGame(new Computer());
+        List<Integer> inputNumber = inputView.inputNumber();
 
         // then
-    }
-
-    @Test
-    @DisplayName("사용자 입력에 따른 결과 반환 테스트")
-    void resultTest() {
-        // given
-        BaseballController controller = new BaseballController();
-
-        String userInput = "123";
-        InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
-        System.setIn(inputStream);
-
-        // when
-        controller.playGame(new Computer());
-
-        // then
+        assertThat(inputNumber).isEqualTo(List.of(1, 2, 3));
     }
 
     @Test
