@@ -17,8 +17,16 @@ public class BaseballController {
 
     private User user;
     private Computer computer;
+    private int strikeCount;
+    private int ballCount;
+
+    public BaseballController() {
+        this.strikeCount = 0;
+        this.ballCount = 0;
+    }
 
     public void run() {
+        printGameStartMessage();
         do {
             computer = gameStart();
             playGame();
@@ -26,7 +34,6 @@ public class BaseballController {
     }
 
     public Computer gameStart() {
-        printGameStartMessage();
         return new Computer();
     }
 
@@ -34,8 +41,8 @@ public class BaseballController {
         user = new User();
         while (true) {
             inputUserNumber();
-            int strikeCount = getStrikeCount(user, computer);
-            int ballCount = getBallCount(user, computer);
+            strikeCount = getStrikeCount(user, computer);
+            ballCount = getBallCount(user, computer);
 
             printGameResultMessage(strikeCount, ballCount);
             if (strikeCount == 3) {
@@ -59,13 +66,13 @@ public class BaseballController {
     public int getStrikeCount(User user, Computer computer) {
         List<Integer> computerRandomNumber = computer.getRandomNumber();
         List<Integer> userNumber = user.getNumber();
-        int strikeCnt = 0;
+        strikeCount = 0;
         for (int i = 0; i < computerRandomNumber.size(); i++) {
             if (isStrike(computerRandomNumber.get(i), userNumber.get(i))) {
-                strikeCnt += 1;
+                strikeCount += 1;
             }
         }
-        return strikeCnt;
+        return strikeCount;
     }
 
     public boolean isStrike(Integer computerRandomNumberDigit, Integer userNumberDigit) {
@@ -78,14 +85,14 @@ public class BaseballController {
     public int getBallCount(User user, Computer computer) {
         List<Integer> computerRandomNumber = computer.getRandomNumber();
         List<Integer> userNumber = user.getNumber();
-        int ballCnt = 0;
+        ballCount = 0;
 
         for (int i = 1; i <= 9; i++) {
             if (isBall(computerRandomNumber, userNumber, i)) {
-                ballCnt += 1;
+                ballCount += 1;
             }
         }
-        return ballCnt;
+        return ballCount;
     }
 
     public boolean isBall(List<Integer> computerRandomNumber, List<Integer> userNumber, int idx) {
@@ -109,7 +116,7 @@ public class BaseballController {
         validateNotStringRestartStatus(restartStatus);
         validateNotDoubleRestartStatus(restartStatus);
 
-        if(restartStatus.equals(NOT_RESTART_STATUS) ){
+        if(restartStatus.equals(NOT_RESTART_STATUS)){
             return false;
         } else {
             return true;
@@ -123,7 +130,7 @@ public class BaseballController {
     }
 
     public void validateNotStringRestartStatus(final String restartStatus) {
-        if ( !(restartStatus != null && restartStatus.matches("[-+]?\\d*\\.?\\d+")) ) {
+        if (!(restartStatus != null && restartStatus.matches("[-+]?\\d*\\.?\\d+"))) {
             throw new IllegalArgumentException(RESTART_OR_END_NOT_NUMBER_BECAUSE_STRING_EXCEPTION);
         }
     }
