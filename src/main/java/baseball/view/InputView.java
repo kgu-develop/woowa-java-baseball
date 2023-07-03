@@ -26,6 +26,10 @@ public class InputView {
         return number;
     }
 
+    public static String terminateSignUserInput() {
+        return Console.readLine();
+    }
+
     public static void validateNotStringRestartStatus(final String restartStatus) {
         if ( !(restartStatus != null && restartStatus.matches(STRING_REGEX)) ) {
             throw new IllegalArgumentException(RESTART_OR_END_NUMBER_NOT_NUMBER_EXCEPTION);

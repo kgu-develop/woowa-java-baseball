@@ -2,8 +2,10 @@ package baseball.controller;
 
 import baseball.model.Computer;
 import baseball.model.User;
+import baseball.view.InputView;
 import camp.nextstep.edu.missionutils.Console;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static baseball.view.InputView.inputNumber;
 import static baseball.view.OutputView.*;
@@ -40,7 +42,7 @@ public class BaseballController {
     public void playGame() {
         user = new User();
         while (true) {
-            inputUserNumber();
+            user.setNumber(inputNumber());
             strikeCount = getStrikeCount(user, computer);
             ballCount = getBallCount(user, computer);
 
@@ -52,69 +54,36 @@ public class BaseballController {
     }
 
     public boolean gameOver() {
-        if (isTerminate(terminateSignUserInput())) {
+        if (isTerminate(InputView.terminateSignUserInput())) {
             return true;
         } else {
             return false;
         }
     }
 
-    private void inputUserNumber() {
-        user.setNumber(inputNumber());
-    }
-
     public int getStrikeCount(User user, Computer computer) {
         List<Integer> computerRandomNumber = computer.getRandomNumber();
         List<Integer> userNumber = user.getNumber();
-        strikeCount = 0;
-        for (int i = 0; i < computerRandomNumber.size(); i++) {
-            if (isStrike(computerRandomNumber.get(i), userNumber.get(i))) {
-                strikeCount += 1;
-            }
-        }
-        return strikeCount;
-    }
 
-    public boolean isStrike(Integer computerRandomNumberDigit, Integer userNumberDigit) {
-        if (computerRandomNumberDigit == userNumberDigit) {
-            return true;
-        }
-        return false;
+        return Stream.iterate(0, n -> n + 1).limit(computerRandomNumber.size())
+                .filter(i -> computerRandomNumber.get(i) == userNumber.get(i))
+                .reduce(0, (cnt, b) -> cnt + 1);
     }
 
     public int getBallCount(User user, Computer computer) {
         List<Integer> computerRandomNumber = computer.getRandomNumber();
         List<Integer> userNumber = user.getNumber();
-        ballCount = 0;
 
-        for (int i = 1; i <= 9; i++) {
-            if (isBall(computerRandomNumber, userNumber, i)) {
-                ballCount += 1;
-            }
-        }
-        return ballCount;
-    }
-
-    public boolean isBall(List<Integer> computerRandomNumber, List<Integer> userNumber, int idx) {
-        if (hasBothNumberContain(computerRandomNumber, userNumber, idx)) {
-            if (computerRandomNumber.indexOf(idx) != userNumber.indexOf(idx)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean hasBothNumberContain(List<Integer> computerRandomNumber, List<Integer> userNumber, int idx) {
-        if (computerRandomNumber.contains(idx) && userNumber.contains(idx)) {
-            return true;
-        }
-        return false;
+        return Stream.iterate(1, n -> n + 1).limit(9)
+                .filter(i -> computerRandomNumber.contains(i) && userNumber.contains(i))
+                .filter(i -> computerRandomNumber.indexOf(i) != userNumber.indexOf(i))
+                .reduce(0, (cnt, b) -> cnt + 1);
     }
 
     public boolean isTerminate(String restartStatus) {
-        validateRangeRestartStatus(restartStatus);
         validateNotStringRestartStatus(restartStatus);
         validateNotDoubleRestartStatus(restartStatus);
+        validateRangeRestartStatus(restartStatus);
 
         if(restartStatus.equals(NOT_RESTART_STATUS)){
             return false;
@@ -139,9 +108,5 @@ public class BaseballController {
         if (!restartStatus.chars().allMatch(Character::isDigit)) {
             throw new IllegalArgumentException(RESTART_OR_END_NOT_NUMBER_BECAUSE_DOUBLE_EXCEPTION);
         }
-    }
-
-    private String terminateSignUserInput() {
-        return Console.readLine();
     }
 }
