@@ -11,11 +11,9 @@ import static baseball.view.InputView.inputNumber;
 import static baseball.view.OutputView.*;
 
 public class BaseballController {
-
-    private static final String NOT_RESTART_STATUS = "2";
-    private static final String RESTART_OR_END_ONE_OR_TWO_EXCEPTION = "재시작은 1, 완전 종료는 2 입니다.";
-    private static final String RESTART_OR_END_NOT_NUMBER_BECAUSE_STRING_EXCEPTION = "재시작은 1, 완전 종료는 2인 정수입니다.";
-    private static final String RESTART_OR_END_NOT_NUMBER_BECAUSE_DOUBLE_EXCEPTION = "재시작은 1, 완전 종료는 2인 정수로 소수를 입력할 수 없습니다.";
+    private static final String RESTART_STATUS = "1";
+    private static final int THREE_STRIKE = 3;
+    private static final boolean NOT_THREE_STRIKE = true;
 
     private User user;
     private Computer computer;
@@ -35,30 +33,27 @@ public class BaseballController {
         } while (gameOver());
     }
 
-    private static Computer gameStart() {
+    private Computer gameStart() {
         return new Computer();
     }
 
     private void playGame() {
         user = new User();
-        while (true) {
+
+        while (NOT_THREE_STRIKE) {
             user.setNumber(inputNumber());
             strikeCount = getStrikeCount(user, computer);
             ballCount = getBallCount(user, computer);
 
             printGameResultMessage(strikeCount, ballCount);
-            if (strikeCount == 3) {
+            if (strikeCount == THREE_STRIKE) {
                 break;
             }
         }
     }
 
-    private static boolean gameOver() {
-        if (isTerminate(InputView.terminateSignUserInput())) {
-            return true;
-        } else {
-            return false;
-        }
+    private boolean gameOver() {
+        return !isTerminate(InputView.terminateSignUserInput());
     }
 
     private int getStrikeCount(final User user, final Computer computer) {
@@ -80,33 +75,11 @@ public class BaseballController {
                 .reduce(0, (cnt, b) -> cnt + 1);
     }
 
-    private static boolean isTerminate(final String restartStatus) {
-        validateNotStringRestartStatus(restartStatus);
-        validateNotDoubleRestartStatus(restartStatus);
-        validateRangeRestartStatus(restartStatus);
-
-        if(restartStatus.equals(NOT_RESTART_STATUS)){
+    private boolean isTerminate(final String restartStatus) {
+        if(restartStatus.equals(RESTART_STATUS)){
             return false;
         } else {
             return true;
-        }
-    }
-
-    private static void validateRangeRestartStatus(final String restartStatus) {
-        if (Integer.parseInt(restartStatus) < 1 || Integer.parseInt(restartStatus) > 2) {
-            throw new IllegalArgumentException(RESTART_OR_END_ONE_OR_TWO_EXCEPTION);
-        }
-    }
-
-    private static void validateNotStringRestartStatus(final String restartStatus) {
-        if (!(restartStatus != null && restartStatus.matches("[-+]?\\d*\\.?\\d+"))) {
-            throw new IllegalArgumentException(RESTART_OR_END_NOT_NUMBER_BECAUSE_STRING_EXCEPTION);
-        }
-    }
-
-    private static void validateNotDoubleRestartStatus(final String restartStatus) {
-        if (!restartStatus.chars().allMatch(Character::isDigit)) {
-            throw new IllegalArgumentException(RESTART_OR_END_NOT_NUMBER_BECAUSE_DOUBLE_EXCEPTION);
         }
     }
 }

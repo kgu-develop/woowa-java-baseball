@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Computer {
+    public static final int NUMBER_LENGTH = 3;
+    public static final int MIN_RANGE = 1;
+    public static final int MAX_RANGE = 9;
     private List<Integer> randomNumber;
 
     public Computer() {
@@ -29,14 +32,14 @@ public class Computer {
     }
 
     private boolean checkLengthSmallThanThree() {
-        if (randomNumber.size() < 3) {
+        if (randomNumber.size() < NUMBER_LENGTH) {
             return true;
         }
         return false;
     }
 
-    private static Integer getRandomDigit() {
-        return Randoms.pickNumberInRange(1, 9);
+    private Integer getRandomDigit() {
+        return Randoms.pickNumberInRange(MIN_RANGE, MAX_RANGE);
     }
 
     private boolean hasDuplicateDigitInRandomNumber(final Integer digit) {
