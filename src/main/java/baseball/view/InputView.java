@@ -10,14 +10,20 @@ import static baseball.utils.ExceptionConstants.InputException.INPUT_MUST_BE_NUM
 import static baseball.utils.ExceptionConstants.InputException.INPUT_MUST_NOT_CONTAINS_SPACE;
 
 public class InputView {
-    public static List<Integer> readUserBaseballInput() {
+    public static List<Integer> readUserBaseballs() {
         System.out.print("숫자를 입력해주세요 : ");
 
         String userInput = Console.readLine();
-        validateInputIsNumeric(userInput);
         validateInputHasSpace(userInput);
+        validateInputIsNumeric(userInput);
 
         return convertUserInputToIntegerList(userInput);
+    }
+
+    private static void validateInputHasSpace(final String userInput) {
+        if (hasSpace(userInput)) {
+            throw new IllegalArgumentException(INPUT_MUST_NOT_CONTAINS_SPACE.message);
+        }
     }
 
     private static void validateInputIsNumeric(final String userInput) {
@@ -25,12 +31,6 @@ public class InputView {
             Integer.parseInt(userInput);
         } catch (NumberFormatException exception) {
             throw new IllegalArgumentException(INPUT_MUST_BE_NUMERIC.message);
-        }
-    }
-
-    private static void validateInputHasSpace(final String userInput) {
-        if (hasSpace(userInput)) {
-            throw new IllegalArgumentException(INPUT_MUST_NOT_CONTAINS_SPACE.message);
         }
     }
 
@@ -45,8 +45,9 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static int readUserRestartCommandInput() {
+    public static int readUserRestartCommand() {
         String userInput = Console.readLine();
+        validateInputHasSpace(userInput);
         validateInputIsNumeric(userInput);
 
         return Integer.parseInt(userInput);

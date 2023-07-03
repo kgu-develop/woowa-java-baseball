@@ -38,7 +38,7 @@ public class GameController {
     }
 
     private void readUserBaseballInput() {
-        List<Integer> userBaseballs = InputView.readUserBaseballInput();
+        List<Integer> userBaseballs = InputView.readUserBaseballs();
         user = new User(userBaseballs);
     }
 
@@ -54,7 +54,7 @@ public class GameController {
     }
 
     private void determineGameRestartOrEnd() {
-        int userCommand = InputView.readUserRestartCommandInput();
+        int userCommand = InputView.readUserRestartCommand();
         GameProcessDecider decider = GameProcessDecider.getDecider(userCommand);
 
         if (decider == GAME_RESTART) {
