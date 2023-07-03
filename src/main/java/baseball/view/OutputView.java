@@ -20,6 +20,10 @@ public class OutputView {
             System.out.println(GAME_RESTART_OR_END_MESSAGE);
         } else if (strikeCount == 0 && ballCount == 0) {
             System.out.println(NOTHING_MESSAGE);
+        } else if (strikeCount != 0 && ballCount == 0) {
+            System.out.println(strikeCount + STRIKE_MESSAGE);
+        } else if (strikeCount == 0 && ballCount != 0) {
+            System.out.println(ballCount + BALL_MESSAGE);
         } else {
             System.out.println(ballCount + BALL_MESSAGE + strikeCount + STRIKE_MESSAGE);
         }
