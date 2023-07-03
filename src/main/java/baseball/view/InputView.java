@@ -26,17 +26,17 @@ public class InputView {
         }
     }
 
+    private static boolean hasSpace(String userInput) {
+        return userInput.chars()
+                .anyMatch(Character::isWhitespace);
+    }
+
     private static void validateInputIsNumeric(final String userInput) {
         try {
             Integer.parseInt(userInput);
         } catch (NumberFormatException exception) {
             throw new IllegalArgumentException(INPUT_MUST_BE_NUMERIC.message);
         }
-    }
-
-    private static boolean hasSpace(String userInput) {
-        return userInput.chars()
-                .anyMatch(Character::isWhitespace);
     }
 
     private static List<Integer> convertUserInputToIntegerList(final String userInput) {
