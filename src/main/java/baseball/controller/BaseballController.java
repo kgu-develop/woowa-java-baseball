@@ -3,12 +3,20 @@ package baseball.controller;
 import baseball.model.Computer;
 import baseball.model.User;
 import camp.nextstep.edu.missionutils.Console;
-
-import java.util.ArrayList;
 import java.util.List;
 
+import static baseball.view.InputView.inputNumber;
+import static baseball.view.OutputView.*;
+
 public class BaseballController {
+
+    public static final String NOT_RESTART_STATUS = "2";
+    public static final String RESTART_OR_END_ONE_OR_TWO_EXCEPTION = "재시작은 1, 완전 종료는 2 입니다.";
+    public static final String RESTART_OR_END_NOT_NUMBER_BECAUSE_STRING_EXCEPTION = "재시작은 1, 완전 종료는 2인 정수입니다.";
+    public static final String RESTART_OR_END_NOT_NUMBER_BECAUSE_DOUBLE_EXCEPTION = "재시작은 1, 완전 종료는 2인 정수로 소수를 입력할 수 없습니다.";
+
     public void run() {
+        printGameStartMessage();
         do {
             Computer computer = gameStart();
             playGame(computer);
@@ -16,33 +24,19 @@ public class BaseballController {
     }
 
     public Computer gameStart() {
-        System.out.println("숫자 야구 게임을 시작합니다.");
         return new Computer();
     }
 
     public void playGame(Computer computer) {
         User user = new User();
-
         while (true) {
             inputUserNumber(user);
-
-            /*
-            System.out.println(user.getNumber());
-            System.out.println(computer.getRandomNumber());
-            */
-
             int strikeCount = getStrikeCount(user, computer);
             int ballCount = getBallCount(user, computer);
 
+            printGameResultMessage(strikeCount, ballCount);
             if (strikeCount == 3) {
-                System.out.println(strikeCount + "스트라이크");
-                System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임종료");
-                System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요");
                 break;
-            } else if (strikeCount == 0 && ballCount == 0) {
-                System.out.println("낫싱");
-            } else {
-                System.out.println(ballCount + "볼 " + strikeCount + "스트라이크");
             }
         }
     }
@@ -51,25 +45,12 @@ public class BaseballController {
         if (isTerminate(terminateSignUserInput())) {
             return true;
         } else {
-            System.out.println("완전 종료");
             return false;
         }
     }
 
     private void inputUserNumber(User user) {
-        System.out.print("숫자를 입력해주세요 : ");
-        String inputNumber = Console.readLine();
-        List<Integer> number = new ArrayList<>();
-
-        for (int i = 0; i < inputNumber.length(); i++) {
-            char digitNumber = inputNumber.charAt(i);
-            String digitStringNumber = String.valueOf(digitNumber);
-
-            validateNotStringRestartStatus(digitStringNumber);
-            number.add(Integer.valueOf(digitStringNumber));
-        }
-
-        user.setNumber(number);
+        user.setNumber(inputNumber());
     }
 
     public int getStrikeCount(User user, Computer computer) {
@@ -81,7 +62,6 @@ public class BaseballController {
                 strikeCnt += 1;
             }
         }
-
         return strikeCnt;
     }
 
@@ -89,7 +69,6 @@ public class BaseballController {
         if (computerRandomNumberDigit == userNumberDigit) {
             return true;
         }
-
         return false;
     }
 
@@ -103,7 +82,6 @@ public class BaseballController {
                 ballCnt += 1;
             }
         }
-
         return ballCnt;
     }
 
@@ -113,7 +91,6 @@ public class BaseballController {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -121,7 +98,6 @@ public class BaseballController {
         if (computerRandomNumber.contains(idx) && userNumber.contains(idx)) {
             return true;
         }
-
         return false;
     }
 
@@ -130,30 +106,28 @@ public class BaseballController {
         validateNotStringRestartStatus(restartStatus);
         validateNotDoubleRestartStatus(restartStatus);
 
-        if(restartStatus.equals("2") ){
+        if(restartStatus.equals(NOT_RESTART_STATUS) ){
             return false;
         } else {
             return true;
         }
     }
 
-
-
     public void validateRangeRestartStatus(final String restartStatus) {
         if (Integer.parseInt(restartStatus) < 1 || Integer.parseInt(restartStatus) > 2) {
-            throw new IllegalArgumentException("재시작은 1, 완전 종료는 2 입니다.");
+            throw new IllegalArgumentException(RESTART_OR_END_ONE_OR_TWO_EXCEPTION);
         }
     }
 
     public void validateNotStringRestartStatus(final String restartStatus) {
         if ( !(restartStatus != null && restartStatus.matches("[-+]?\\d*\\.?\\d+")) ) {
-            throw new IllegalArgumentException("재시작은 1, 완전 종료는 2인 정수입니다.");
+            throw new IllegalArgumentException(RESTART_OR_END_NOT_NUMBER_BECAUSE_STRING_EXCEPTION);
         }
     }
 
     public void validateNotDoubleRestartStatus(final String restartStatus) {
         if (!restartStatus.chars().allMatch(Character::isDigit)) {
-            throw new IllegalArgumentException("재시작은 1, 완전 종료는 2인 정수로 소수를 입력할 수 없습니다.");
+            throw new IllegalArgumentException(RESTART_OR_END_NOT_NUMBER_BECAUSE_DOUBLE_EXCEPTION);
         }
     }
 
