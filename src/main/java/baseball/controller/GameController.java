@@ -37,7 +37,7 @@ public class GameController {
         }
     }
 
-    public void readUserBaseballInput() {
+    private void readUserBaseballInput() {
         List<Integer> userBaseballs = InputView.readUserBaseballInput();
         user = new User(userBaseballs);
     }
