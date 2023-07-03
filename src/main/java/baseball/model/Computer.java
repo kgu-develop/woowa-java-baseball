@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Computer {
-    public List<Integer> randomNumber;
+    private List<Integer> randomNumber;
 
     public Computer() {
         saveRandomNumberWithGameStart();
@@ -16,7 +16,7 @@ public class Computer {
         return randomNumber;
     }
 
-    public void saveRandomNumberWithGameStart() {
+    private void saveRandomNumberWithGameStart() {
         randomNumber = new ArrayList<>();
         Integer digit;
 
@@ -28,25 +28,25 @@ public class Computer {
         }
     }
 
-    public boolean checkLengthSmallThanThree() {
+    private boolean checkLengthSmallThanThree() {
         if (randomNumber.size() < 3) {
             return true;
         }
         return false;
     }
 
-    public Integer getRandomDigit() {
+    private static Integer getRandomDigit() {
         return Randoms.pickNumberInRange(1, 9);
     }
 
-    public boolean hasDuplicateDigitInRandomNumber(Integer digit) {
+    private boolean hasDuplicateDigitInRandomNumber(final Integer digit) {
         if (randomNumber.contains(digit)) {
             return true;
         }
         return false;
     }
 
-    public void setRandomNumber(List<Integer> randomNumber) {
+    public void setRandomNumber(final List<Integer> randomNumber) {
         this.randomNumber = randomNumber;
     }
 }
