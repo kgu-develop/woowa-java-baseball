@@ -24,8 +24,16 @@ public class Referee {
             final List<Integer> userBaseballs
     ) {
         return (int) IntStream.range(0, BASEBALL_SIZE)
-                .filter(index -> computerBaseballs.get(index).equals(userBaseballs.get(index)))
+                .filter(index -> isExactlyMatchAtIndex(computerBaseballs, userBaseballs, index))
                 .count();
+    }
+
+    private static boolean isExactlyMatchAtIndex(
+            final List<Integer> computerBaseballs,
+            final List<Integer> userBaseballs,
+            final int index
+    ) {
+        return computerBaseballs.get(index).equals(userBaseballs.get(index));
     }
 
     private static int calculateBallCount(
