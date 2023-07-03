@@ -17,14 +17,29 @@ public class Computer {
     private Baseballs generateRandomBaseballs() {
         List<Integer> baseballs = new ArrayList<>();
 
-        while (baseballs.size() < BASEBALL_SIZE) {
-            int randomNumber = Randoms.pickNumberInRange(MIN_BASEBALL, MAX_BASEBALL);
-            if (!baseballs.contains(randomNumber)) {
+        while (isNotReachedLimitSize(baseballs)) {
+            int randomNumber = getRandomNumberInRange();
+            if (isRandomNumberAbsentInBaseballs(baseballs, randomNumber)) {
                 baseballs.add(randomNumber);
             }
         }
 
         return new Baseballs(baseballs);
+    }
+
+    private boolean isNotReachedLimitSize(final List<Integer> baseballs) {
+        return baseballs.size() < BASEBALL_SIZE;
+    }
+
+    private int getRandomNumberInRange() {
+        return Randoms.pickNumberInRange(MIN_BASEBALL, MAX_BASEBALL);
+    }
+
+    private boolean isRandomNumberAbsentInBaseballs(
+            final List<Integer> baseballs,
+            final int randomNumber
+    ) {
+        return !baseballs.contains(randomNumber);
     }
 
     public List<Integer> getBaseballs() {
