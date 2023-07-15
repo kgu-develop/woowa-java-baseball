@@ -17,7 +17,7 @@ class UserTest {
         final List<Integer> baseballs = List.of(1, 9, 10);
 
         // when - then
-        assertThatThrownBy(() -> new Baseballs(baseballs))
+        assertThatThrownBy(() -> new User(baseballs))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(BASEBALL_IS_NOT_IN_RANGE.message);
     }
@@ -29,7 +29,7 @@ class UserTest {
         final List<Integer> baseballs = List.of(1, 2);
 
         // when - then
-        assertThatThrownBy(() -> new Baseballs(baseballs))
+        assertThatThrownBy(() -> new User(baseballs))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(BASEBALL_SIZE_IS_NOT_FULFILL.message);
     }
@@ -41,7 +41,7 @@ class UserTest {
         final List<Integer> baseballs = List.of(1, 2, 2);
 
         // when - then
-        assertThatThrownBy(() -> new Baseballs(baseballs))
+        assertThatThrownBy(() -> new User(baseballs))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(BASEBALL_MUST_BE_UNIQUE.message);
     }
